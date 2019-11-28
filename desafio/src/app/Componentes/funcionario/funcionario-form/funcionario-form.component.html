@@ -1,0 +1,39 @@
+<div class="container">
+        <form class="form-group">
+                <div class="row">
+                        <div [hidden]="oculto == false">
+                                <label for="id">id:</label>
+                                <input #id type="number" class="form-control"
+                                        [(ngModel)]="funcionario.cod" [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="col-md-6">
+                                <label for="nome">Nome:</label>
+                                <input #nome type="text" class="form-control" [(ngModel)]="funcionario.nome"
+                                        [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="col-md-6">
+                                <label for="data">Data de Nascimento:</label>
+                                <input #DataNascimento id="data" type="date" [(ngModel)]="funcionario.dataNascimento"
+                                        [ngModelOptions]="{standalone: true}" class="form-control">
+                        </div>
+                        <div class="col-md-6">
+                                <label for="cpf">CPF:</label>
+                                <input #cpf id="cpf" maxlength="11" type="text" class="form-control"
+                                        [(ngModel)]="funcionario.cpf" [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="col-md-6">
+                                <label for="empresas">Empresa</label>
+                                <select #empresa class="form-control" id="empresas">
+                                        <option selected disabled>Escolha sua empresa</option>
+                                        <option id="{{empresa.cod}}" *ngFor="let empresa of empresas">{{empresa.nome}}
+                                        </option>
+                                </select>
+                        </div>
+
+                        <div class="col align-self-end" style="margin-top: 20px;">
+                                <button type="button" class="btn btn-secondary"
+                                        (click)="enviar(id.value, nome.value, DataNascimento.value, cpf.value, empresa.value)">Enviar</button>
+                        </div>
+                </div>
+        </form>
+</div>

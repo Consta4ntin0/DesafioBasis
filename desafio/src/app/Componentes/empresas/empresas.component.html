@@ -1,0 +1,40 @@
+<div class="container">
+    <div class="table-responcive">
+        <table class="table">
+            <thead>
+                <h1>Empresas</h1>
+            </thead>
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th scope="col">cnpj</th>
+                    <th scope="col">Endereço</th>
+                    <th scope="col"><button (click)="add()" title="excluir" class="btn btn-dark">
+                            <i class="fas fa-plus"></i> Empresa
+                        </button></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let empresa of empresas">
+                    <td>{{empresa.nome}}</td>
+                    <td>{{empresa.cnpj}}</td>
+                    <td>{{empresa.endereco}}</td>
+                    <td>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <button (click)="editar(empresa)" title="Editar" class="btn btn-secondary">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                            </div>
+                            <div class="col-md-3">
+                                <button (click)="deletar(empresa)" title="excluir" class="btn btn-danger">
+                                    <i class="fas fa-trash-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
