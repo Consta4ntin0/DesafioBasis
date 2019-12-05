@@ -3,16 +3,18 @@ import { FuncionarioService } from './../../Servicos/funcionario.service';
 import { Empresa } from './../../Modelos/Empresa';
 
 import { Funcionario } from './../../Modelos/Funcionario';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+import { FuncionarioFormComponent } from './funcionario-form/funcionario-form.component';
 
 
 @Component({
-  selector: 'app-funcionario',
+  selector: 'funcionario',
   templateUrl: './funcionario.component.html',
   styleUrls: ['./funcionario.component.css']
 })
 export class FuncionarioComponent implements OnInit {
+  @ViewChild('funcionarioForm',null) funcionarioForm:FuncionarioFormComponent;
   funcionarios: Funcionario[];
   funcionario: Funcionario;
   empresas:Empresa[];
@@ -22,6 +24,7 @@ export class FuncionarioComponent implements OnInit {
     cpf:String;
     empresa:String;
   };
+  
 
   constructor(private funcionarioService:FuncionarioService, private router: Router,private service:EmpresaService) { }
 
@@ -32,33 +35,31 @@ export class FuncionarioComponent implements OnInit {
   carregaDados(){
     this.funcionarioService.getFuncionarios().subscribe(valor => {
       this.funcionarios = valor;
-      console.log(this.funcionarios);
     });
   }
   add(){
     this.router.navigate(['funcionario/novo']);
   }
 
-  deletar(func:Funcionario){
-    console.log(func); 
-    this.funcionarioService.deleteFuncionario(func).subscribe();
-    window.location.reload();
+  deletar(func:any){
+    this.funcionarioService.deleteFuncionario(func).subscribe( () => {
+      this.funcionarios = this.funcionarios.filter(funcionario => {
+        return funcionario.codFunc !== func.codFunc;
+      });
+    });
   }
 
   editar(func:any){
-    console.log(func);
-    localStorage.setItem("cod", func.cod);
-    this.router.navigate(['funcionario/editar']);
+    this.router.navigate(['funcionario/editar/',func.codFunc],);
   }
+  
   carregaEmp(){
     this.service.getEmpresas().subscribe( valor => {
         this.empresas = valor;
       }
     )
+
+
   }
-
-  
-
-  
 
 }

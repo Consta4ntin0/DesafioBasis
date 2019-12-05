@@ -7,6 +7,7 @@
                     <th scope="col">Nome</th>
                     <th scope="col">CPF</th>
                     <th scope="col">Data de Nascimento</th>
+                    <th scope="col">Empresa</th>
                     <th scope="col"><button (click)="add()" title="novo" class="btn btn-dark">
                             <i class="fas fa-plus"></i> Funcionario
                         </button></th>
@@ -14,9 +15,10 @@
             </thead>
             <tbody>
                 <tr *ngFor="let funcionario of funcionarios">
-                    <td>{{funcionario.nome}}</td>
-                    <td>{{funcionario.cpf}}</td>
-                    <td>{{funcionario.dataNascimento}}</td>
+                    <td>{{funcionario.nomeFunc}}</td>
+                    <td>{{funcionario.cpfFunc}}</td>
+                    <td>{{funcionario.dataNascimentoFunc}}</td>
+                    <td>{{funcionario.nomeEmpresa}}</td>
                     <td>
                         <div class="row">
                             <div class="col-md-3">
@@ -37,4 +39,4 @@
     </div>
 </div>
 
-
+<funcionarioForm *ngIf="oculto" #funcionarioForm ></funcionarioForm>

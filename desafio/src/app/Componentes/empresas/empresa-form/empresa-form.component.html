@@ -2,27 +2,27 @@
         <form>
                 <div class="row">
                         <div [hidden]="oculto == false">
-                                <input #id id="id" type="text" class="form-control" 
+                                <input id="id" type="text" class="form-control" 
                                 [(ngModel)]="empresa.cod" [ngModelOptions]="{standalone: true}"> 
                         </div>
                         <div class="col-md-6">
                                 <label for="nome">Nome:</label>
-                                <input #nome id="nome" type="text" class="form-control" 
+                                <input id="nome" type="text" class="form-control" 
                                 [(ngModel)]="empresa.nome" [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="col-md-6">
                                 <label for="cnpj">CNPJ:</label>
-                                <input #cnpj maxlength="4" id="cnpj" type="text" class="form-control" 
+                                <input id="cnpj" type="text" class="form-control" 
                                 [(ngModel)]="empresa.cnpj" [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="col-md-6">
                                 <label for="endereco">Endereço:</label>
-                                <input #endereco id="endereco" type="text" class="form-control" 
+                                <input id="endereco" type="text" class="form-control" 
                                 [(ngModel)]="empresa.endereco" [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="col align-self-end" style="margin-top: 20px;">
                                 <button type="button" class="btn btn-secondary"
-                                        (click)="enviar(id.value, nome.value, cnpj.value, endereco.value)">Enviar</button>
+                                        (click)="enviar(empresa)">Enviar</button>
                         </div>
                 </div>
         </form>

@@ -1,15 +1,21 @@
 package com.Desafio.modelo;
 
-import jdk.nashorn.internal.objects.annotations.Getter;
-import jdk.nashorn.internal.objects.annotations.Setter;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.validator.constraints.br.CPF;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Date;
-
+@Getter
+@Setter
 @Entity
-@Table(name="Funcionario")
-
-public class Funcionario {
+@Table(name="funcionario")
+@NoArgsConstructor
+public class Funcionario implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column
@@ -18,47 +24,11 @@ public class Funcionario {
     private String nome;
     @Column
     private Date dataNascimento;
-    @Column
+    @CPF
     private String cpf;
-    @Column(name="cod_empresa")
-    private int codEmpresa;
+    @JoinColumn(name="cod_empresa", referencedColumnName = "cod")
+    @ManyToOne
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    private Empresa empresa;
 
-    public String getCpf() {
-        return cpf;
-    }
-
-    public void setCpf(String cpf) {
-        this.cpf = cpf;
-    }
-
-    public int getCod() {
-        return cod;
-    }
-
-    public void setCod(int cod) {
-        this.cod = cod;
-    }
-
-    public String getNome() {
-        return nome;
-    }
-
-    public void setNome(String nome) {
-        this.nome = nome;
-    }
-
-    public Date getDataNascimento() {
-        return dataNascimento;
-    }
-
-    public void setDataNascimento(Date dataNascimento) {
-        this.dataNascimento = dataNascimento;
-    }
-
-    public int getCodEmpresa() {
-        return codEmpresa;
-    }
-    public void setCodEmpresa(int codEmpresa) {
-        this.codEmpresa = codEmpresa;
-    }
 }

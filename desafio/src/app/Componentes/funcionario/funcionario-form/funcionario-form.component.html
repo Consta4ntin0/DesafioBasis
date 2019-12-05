@@ -2,37 +2,37 @@
         <form class="form-group">
                 <div class="row">
                         <div [hidden]="oculto == false">
-                                <label for="id">id:</label>
-                                <input #id type="number" class="form-control"
-                                        [(ngModel)]="funcionario.cod" [ngModelOptions]="{standalone: true}">
+                                <label>id:</label>
+                                <input type="number" class="form-control"
+                                        [(ngModel)]="funcionario.codFunc" [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="col-md-6">
                                 <label for="nome">Nome:</label>
-                                <input #nome type="text" class="form-control" [(ngModel)]="funcionario.nome"
+                                <input type="text" class="form-control" [(ngModel)]="funcionario.nomeFunc"
                                         [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="col-md-6">
                                 <label for="data">Data de Nascimento:</label>
-                                <input #DataNascimento id="data" type="date" [(ngModel)]="funcionario.dataNascimento"
+                                <input id="data" type="date" [(ngModel)]="funcionario.dataNascimentoFunc"
                                         [ngModelOptions]="{standalone: true}" class="form-control">
                         </div>
                         <div class="col-md-6">
                                 <label for="cpf">CPF:</label>
-                                <input #cpf id="cpf" maxlength="11" type="text" class="form-control"
-                                        [(ngModel)]="funcionario.cpf" [ngModelOptions]="{standalone: true}">
+                                <input  id="cpf" maxlength="15" type="text" class="form-control"
+                                        [(ngModel)]="funcionario.cpfFunc" [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="col-md-6">
                                 <label for="empresas">Empresa</label>
-                                <select #empresa class="form-control" id="empresas">
+                                <select [(ngModel)]="funcionario.codEmpresa" [ngModelOptions]="{standalone: true}"  class="form-control" id="empresas" >
                                         <option selected disabled>Escolha sua empresa</option>
-                                        <option id="{{empresa.cod}}" *ngFor="let empresa of empresas">{{empresa.nome}}
+                                        <option id="empresas"  *ngFor="let empresa of empresas" value="{{empresa.cod}}">{{empresa.nome}}
                                         </option>
                                 </select>
                         </div>
 
                         <div class="col align-self-end" style="margin-top: 20px;">
                                 <button type="button" class="btn btn-secondary"
-                                        (click)="enviar(id.value, nome.value, DataNascimento.value, cpf.value, empresa.value)">Enviar</button>
+                                        (click)="enviar(funcionario)">Enviar</button>
                         </div>
                 </div>
         </form>

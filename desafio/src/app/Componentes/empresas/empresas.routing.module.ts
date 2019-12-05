@@ -7,7 +7,7 @@ import { Routes, RouterModule } from '@angular/router';
 const empresaRoutes: Routes = [
     {path:'empresa', children:[
         { path:"novo", component: EmpresaFormComponent },
-        {path:'editar', component: EmpresaFormComponent},
+        {path:'editar/:cod', component: EmpresaFormComponent},
         
     ]},
     

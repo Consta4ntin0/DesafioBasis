@@ -1,8 +1,9 @@
+import { Component, OnInit } from '@angular/core';
+import { Router, ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs';
+
 import { EmpresaService } from './../../../Servicos/empresa.service';
 import { Empresa } from './../../../Modelos/Empresa';
-import { Subscription } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-empresa-form',
@@ -10,23 +11,30 @@ import { Router } from '@angular/router';
   styleUrls: ['./empresa-form.component.css']
 })
 export class EmpresaFormComponent implements OnInit {
-  empresa:Empresa = new Empresa();
+  empresa:Empresa = new Empresa;
   oculto = false;
   inscricao: Subscription;
-  constructor(private empresaService:EmpresaService, private router:Router) { }
+  constructor(private empresaService:EmpresaService, 
+    private router:Router,
+    private route:ActivatedRoute) { }
 
   ngOnInit() {
-    var cod = parseInt(localStorage.getItem('cod'));
-    localStorage.clear();
-    if (!isNaN(cod)) {
-      this.empresaService.getEmpresaId(cod).subscribe(valor => {
-        this.empresa = valor;
-      });
-    }
+    this.route.params.subscribe(valor => {
+      if(valor['cod']){
+        this.carregaDados(Number(valor['cod']));
+      }
+    });
   }
 
-  guardar(empresa: Empresa) {
-    if (empresa.cod == undefined) {
+  carregaDados(cod:number) {
+    this.empresaService.getEmpresaId(cod).subscribe(valor => {
+      this.empresa = valor;
+    }
+    )
+  }
+
+  guardar(empresa: Empresa) { 
+    if (!empresa.cod) {
       this.empresaService.createEmpresa(empresa).subscribe(value => {
         alert("Empresa adicionada com sucesso!")
         this.router.navigate(["empresas"]);
@@ -39,19 +47,13 @@ export class EmpresaFormComponent implements OnInit {
       }
   }
 
-    enviar(id: number, nome: String, cnpj:string, endereco:String) {
-      if (nome == undefined && cnpj == undefined && endereco == undefined) {
+    enviar(empresa:Empresa) {
+      if (!empresa.nome && !empresa.cnpj && !empresa.endereco) {
         alert("preencha os campos corretamente")
-      } else if (cnpj.length < 4) {
+      } else if (empresa.cnpj.length<4) {
         alert("cnpj deve ter 4 digitos")
-      } else {
-        if (id != 0) {
-          this.empresa = new Empresa(id, nome, cnpj, endereco);
-          this.guardar(this.empresa)
-        } else {
-          this.empresa = new Empresa(null, nome, cnpj, endereco);
-          this.guardar(this.empresa)
-        }
+      } else {     
+          this.guardar(empresa)
       }
     }
 

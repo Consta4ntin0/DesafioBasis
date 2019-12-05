@@ -21,10 +21,11 @@ export class FuncionarioService {
   }
 
   updateFuncionario(funcionario: Funcionario){
-    return this.http.put<Funcionario>(this.Url+"/"+funcionario.cod, funcionario);
+    return this.http.put<Funcionario>(this.Url+"/"+funcionario.codFunc, funcionario);
   }
 
   deleteFuncionario(funcionario: Funcionario){
-    return this.http.delete<Funcionario>(this.Url+"/"+funcionario.cod);
+    console.log(funcionario.codFunc);
+    return this.http.delete<Funcionario>(this.Url+"/"+funcionario.codFunc);
   }
 }

@@ -1,7 +1,7 @@
 package com.Desafio.web;
 
 import com.Desafio.modelo.Empresa;
-import com.Desafio.servico.EmpresaServico;
+import com.Desafio.servico.impl.EmpresaServico;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -17,7 +17,7 @@ public class EmpresaRest {
     EmpresaServico empresaServico;
 
     @RequestMapping(method= RequestMethod.GET, value="/empresas", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Collection<Empresa>> buscarTodosFuncionarios() {
+    public ResponseEntity<Collection<Empresa>> buscarTodasEmpresa() {
         Collection<Empresa> empresaCadastradas = empresaServico.listarEmpresas();
         return new ResponseEntity<>(empresaCadastradas, HttpStatus.OK);
     }
@@ -34,8 +34,9 @@ public class EmpresaRest {
     }
 
     @RequestMapping(method= RequestMethod.DELETE, value="/empresa/{cod}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public void delete(@PathVariable("cod") int cod) {
+    public ResponseEntity<Void> delete(@PathVariable("cod") int cod) {
         empresaServico.excluir(cod);
+        return new ResponseEntity(HttpStatus.OK);
     }
 
     @RequestMapping(method=RequestMethod.POST, value="/empresa", consumes = MediaType.APPLICATION_JSON_VALUE)

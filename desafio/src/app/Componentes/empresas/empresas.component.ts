@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./empresas.component.css']
 })
 export class EmpresasComponent implements OnInit {
-  empresas:Empresa[] = [];
+  empresas:Empresa[];
 
   constructor(private service:EmpresaService, private router:Router) { }
 
@@ -19,14 +19,13 @@ export class EmpresasComponent implements OnInit {
 
   carregaDados(){
     this.service.getEmpresas().subscribe( valor => {
-        this.empresas = valor;
+      this.empresas = valor;
       }
     )
   }
 
   editar(emp:any){
-    localStorage.setItem("cod", emp.cod);
-    this.router.navigate(['empresa/editar']);
+    this.router.navigate(['empresa/editar', emp.cod]);
   }
 
   add(){
@@ -34,8 +33,12 @@ export class EmpresasComponent implements OnInit {
   }
 
   deletar(emp:Empresa){
-    this.service.deleteEmpresa(emp).subscribe();
-    window.location.reload();
+    this.service.deleteEmpresa(emp).subscribe( () => {
+      this.empresas = this.empresas.filter(empresa => {
+        return empresa.cod !== emp.cod;
+      });
+      
+    });
   }
 
 }

@@ -10,7 +10,7 @@ export class EmpresaService {
   
   Url="http://localhost:8080/empresa"
 
-  getEmpresas(){
+  getEmpresas(){  
     return this.http.get<Empresa[]>(this.Url+"s");
   }
 

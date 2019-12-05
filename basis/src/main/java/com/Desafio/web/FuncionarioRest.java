@@ -1,48 +1,64 @@
 package com.Desafio.web;
 
 import com.Desafio.modelo.Funcionario;
-import com.Desafio.servico.FuncionarioServico;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.Desafio.servico.DTO.FuncionarioDTO;
+import com.Desafio.servico.DTO.FuncionarioEditDTO;
+import com.Desafio.servico.impl.FuncionarioServico;
+import com.Desafio.servico.mapper.EditarFuncionarioMapper;
+import com.Desafio.servico.mapper.ListagemFuncionarioMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.Collection;
+import org.springframework.web.client.HttpStatusCodeException;
+import org.springframework.web.server.ResponseStatusException;
+import java.util.List;
 import java.util.Optional;
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
+@Controller
 public class FuncionarioRest {
-    @Autowired
-    FuncionarioServico funcionarioServico;
+    private ListagemFuncionarioMapper mapper;
+   private final FuncionarioServico funcionarioServico;
 
-    @RequestMapping(method = RequestMethod.GET, value="/funcionarios", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Collection<Funcionario>> buscarTodosFuncionarios() {
-        Collection<Funcionario> funcionariosCadastrados = funcionarioServico.listarFuncionarios();
+    FuncionarioRest(FuncionarioServico funcionarioServico){
+        this.funcionarioServico = funcionarioServico;
+    }
+    @GetMapping(path = "/funcionarios")
+    public ResponseEntity<List<FuncionarioDTO>> buscarTodosFuncionarios() {
+        try {
+        List<FuncionarioDTO> funcionariosCadastrados = funcionarioServico.listarFuncionarios();
         System.out.println("Clientes Listados");
         return new ResponseEntity<>(funcionariosCadastrados, HttpStatus.OK);
+        }catch (ResponseStatusException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @RequestMapping(method = RequestMethod.GET, value="/funcionario/{cod}", produces = MediaType.APPLICATION_JSON_VALUE)
-    public Optional<Funcionario> listarId(@PathVariable("cod") int id) {
+    public FuncionarioEditDTO listarId(@PathVariable("cod") int id) {
         return funcionarioServico.buscaId(id);
     }
 
     @RequestMapping(method = RequestMethod.PUT, value="/funcionario/{cod}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Funcionario editar(@RequestBody Funcionario f, @PathVariable("cod") int cod) {
-        f.setCod(cod);
+    public Funcionario editar(@RequestBody FuncionarioEditDTO f, @PathVariable("cod") int cod){
         return funcionarioServico.alterar(f);
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value="/funcionario/{cod}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void delete(@PathVariable("cod") int cod) {
-        funcionarioServico.excluir(cod);
+    @RequestMapping(method = RequestMethod.DELETE, value="/funcionario/{cod}")
+    public ResponseEntity<Void> delete(@PathVariable("cod") int cod) {
+        try {
+            System.out.println(cod);
+            funcionarioServico.excluir(cod);
+            return new ResponseEntity(HttpStatus.OK);
+        }catch (HttpStatusCodeException e){
+            return  new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
     @RequestMapping(method = RequestMethod.POST, value="/funcionario", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public void adicionar(@RequestBody Funcionario funcionario) {
-        System.out.println(funcionario.toString());
-        funcionarioServico.cadastrar(funcionario);
+    public void adicionar(@RequestBody FuncionarioEditDTO funcionarioDto) {
+           funcionarioServico.cadastrar(funcionarioDto);
     }
-
 }
