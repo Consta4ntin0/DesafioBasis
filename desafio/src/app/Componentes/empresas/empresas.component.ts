@@ -24,20 +24,19 @@ export class EmpresasComponent implements OnInit {
     )
   }
 
-  editar(emp:any){
-    this.router.navigate(['empresa/editar', emp.cod]);
+  editar(empresa:Empresa){
+    this.router.navigate(['empresa/editar', empresa.cod]);
   }
 
   add(){
     this.router.navigate(['empresa/novo']);
   }
 
-  deletar(emp:Empresa){
-    this.service.deleteEmpresa(emp).subscribe( () => {
-      this.empresas = this.empresas.filter(empresa => {
+  deletar(empresa:Empresa){
+    this.service.deleteEmpresa(empresa).subscribe( () => {
+      this.empresas = this.empresas.filter(emp => {
         return empresa.cod !== emp.cod;
       });
-      
     });
   }
 

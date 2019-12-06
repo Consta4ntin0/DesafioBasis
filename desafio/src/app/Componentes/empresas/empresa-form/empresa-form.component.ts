@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
-import { Subscription } from 'rxjs';
 
 import { EmpresaService } from './../../../Servicos/empresa.service';
 import { Empresa } from './../../../Modelos/Empresa';
@@ -13,7 +12,6 @@ import { Empresa } from './../../../Modelos/Empresa';
 export class EmpresaFormComponent implements OnInit {
   empresa:Empresa = new Empresa;
   oculto = false;
-  inscricao: Subscription;
   constructor(private empresaService:EmpresaService, 
     private router:Router,
     private route:ActivatedRoute) { }
@@ -35,12 +33,13 @@ export class EmpresaFormComponent implements OnInit {
 
   guardar(empresa: Empresa) { 
     if (!empresa.cod) {
-      this.empresaService.createEmpresa(empresa).subscribe(value => {
+      this.empresaService.createEmpresa(empresa).subscribe(() => {
         alert("Empresa adicionada com sucesso!")
+        
         this.router.navigate(["empresas"]);
       });
     } else {
-      this.empresaService.updateEmpresa(empresa).subscribe(value => {
+      this.empresaService.updateEmpresa(empresa).subscribe(() => {
         alert("Empresa editada com sucesso!")
         this.router.navigate(["empresas"])
       });
@@ -49,12 +48,13 @@ export class EmpresaFormComponent implements OnInit {
 
     enviar(empresa:Empresa) {
       if (!empresa.nome && !empresa.cnpj && !empresa.endereco) {
-        alert("preencha os campos corretamente")
-      } else if (empresa.cnpj.length<4) {
-        alert("cnpj deve ter 4 digitos")
+        alert("preencha os campos corretamente");       
+      }else if(empresa.cnpj.length < 14){
+        alert("cnpj deve conter 14 digitos");  
       } else {     
-          this.guardar(empresa)
+          this.guardar(empresa);
       }
     }
+
 
 }

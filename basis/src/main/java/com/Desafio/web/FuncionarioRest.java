@@ -20,36 +20,39 @@ import java.util.Optional;
 @Controller
 public class FuncionarioRest {
     private ListagemFuncionarioMapper mapper;
-   private final FuncionarioServico funcionarioServico;
+    private final FuncionarioServico funcionarioServico;
 
     FuncionarioRest(FuncionarioServico funcionarioServico){
         this.funcionarioServico = funcionarioServico;
     }
+
     @GetMapping(path = "/funcionarios")
     public ResponseEntity<List<FuncionarioDTO>> buscarTodosFuncionarios() {
         try {
         List<FuncionarioDTO> funcionariosCadastrados = funcionarioServico.listarFuncionarios();
-        System.out.println("Clientes Listados");
         return new ResponseEntity<>(funcionariosCadastrados, HttpStatus.OK);
         }catch (ResponseStatusException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 
-    @RequestMapping(method = RequestMethod.GET, value="/funcionario/{cod}", produces = MediaType.APPLICATION_JSON_VALUE)
+    @GetMapping(value = "/funcionario/{cod}")
     public FuncionarioEditDTO listarId(@PathVariable("cod") int id) {
         return funcionarioServico.buscaId(id);
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value="/funcionario/{cod}", consumes = MediaType.APPLICATION_JSON_VALUE)
-    public Funcionario editar(@RequestBody FuncionarioEditDTO f, @PathVariable("cod") int cod){
-        return funcionarioServico.alterar(f);
+    @PutMapping(value = "/funcionario/{cod}")
+    public ResponseEntity<Funcionario>  editar(@RequestBody FuncionarioEditDTO f, @PathVariable("cod") int cod){
+        try {
+            return new ResponseEntity<>(funcionarioServico.alterar(f), HttpStatus.OK);
+        }catch (ResponseStatusException e){
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+        }
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value="/funcionario/{cod}")
+    @DeleteMapping(value = "/funcionario/{cod}")
     public ResponseEntity<Void> delete(@PathVariable("cod") int cod) {
         try {
-            System.out.println(cod);
             funcionarioServico.excluir(cod);
             return new ResponseEntity(HttpStatus.OK);
         }catch (HttpStatusCodeException e){
@@ -57,7 +60,7 @@ public class FuncionarioRest {
         }
     }
 
-    @RequestMapping(method = RequestMethod.POST, value="/funcionario", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value="/funcionario" )
     public void adicionar(@RequestBody FuncionarioEditDTO funcionarioDto) {
            funcionarioServico.cadastrar(funcionarioDto);
     }

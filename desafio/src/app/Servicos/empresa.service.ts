@@ -13,7 +13,9 @@ export class EmpresaService {
   getEmpresas(){  
     return this.http.get<Empresa[]>(this.Url+"s");
   }
-
+  getEmpresasDto(){  
+    return this.http.get<Empresa[]>(this.Url+"sDto");
+  }
   createEmpresa(empresa: Empresa){
     return this.http.post<Empresa>(this.Url,empresa);
   }

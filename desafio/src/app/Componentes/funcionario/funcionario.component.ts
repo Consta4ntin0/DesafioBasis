@@ -1,10 +1,10 @@
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { Router } from '@angular/router';
+
+import { Funcionario } from './../../Modelos/Funcionario';
 import { EmpresaService } from './../../Servicos/empresa.service';
 import { FuncionarioService } from './../../Servicos/funcionario.service';
 import { Empresa } from './../../Modelos/Empresa';
-
-import { Funcionario } from './../../Modelos/Funcionario';
-import { Component, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
 import { FuncionarioFormComponent } from './funcionario-form/funcionario-form.component';
 
 
@@ -17,14 +17,7 @@ export class FuncionarioComponent implements OnInit {
   @ViewChild('funcionarioForm',null) funcionarioForm:FuncionarioFormComponent;
   funcionarios: Funcionario[];
   funcionario: Funcionario;
-  empresas:Empresa[];
-  func:{
-    nome:String
-    dataN:Date;
-    cpf:String;
-    empresa:String;
-  };
-  
+  empresas:Empresa[];  
 
   constructor(private funcionarioService:FuncionarioService, private router: Router,private service:EmpresaService) { }
 
@@ -37,6 +30,7 @@ export class FuncionarioComponent implements OnInit {
       this.funcionarios = valor;
     });
   }
+
   add(){
     this.router.navigate(['funcionario/novo']);
   }
@@ -56,10 +50,6 @@ export class FuncionarioComponent implements OnInit {
   carregaEmp(){
     this.service.getEmpresas().subscribe( valor => {
         this.empresas = valor;
-      }
-    )
-
-
+      });
   }
-
 }

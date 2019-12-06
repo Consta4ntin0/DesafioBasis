@@ -1,12 +1,10 @@
-import { Component, OnInit, ViewChild, Output } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+
 import { FuncionarioService } from 'src/app/Servicos/funcionario.service';
 import { Funcionario } from 'src/app/Modelos/Funcionario';
 import { Empresa } from 'src/app/Modelos/Empresa';
 import { EmpresaService } from 'src/app/Servicos/empresa.service';
-import { Validators } from '@angular/forms';
-import { HttpRequest, HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'funcionarioForm',
@@ -17,7 +15,7 @@ export class FuncionarioFormComponent implements OnInit {
   funcionario: any = {};
   empresas: Empresa[] = [];
   oculto = false;
-  id: number;
+
   constructor(
     private route: ActivatedRoute,
     private router: Router,
@@ -34,12 +32,12 @@ export class FuncionarioFormComponent implements OnInit {
   }
 
   carregaDados() {
-    this.service.getEmpresas().subscribe(valor => {
+    this.service.getEmpresasDto().subscribe(valor => {
       this.empresas = valor;
     }
     )
   }
-  
+
   carregaDadosFunc(id: number) {
     this.funcionarioService.getFuncionarioId(id).subscribe(valor => {
       this.funcionario = valor;
@@ -47,24 +45,24 @@ export class FuncionarioFormComponent implements OnInit {
     )
   }
 
-  enviar(funcionario: any) {
+  enviar(funcionario: Funcionario) {
     if (!funcionario.nomeFunc && !funcionario.cpfFunc && !funcionario.dataNascimentoFunc) {
       alert("preencha os campos")
     } else {
       if (!funcionario.codFunc) {
-        this.funcionarioService.createFuncionario(funcionario).subscribe(value => {
+        this.funcionarioService.createFuncionario(funcionario).subscribe(() => {
           alert("Funcionario adicionado com sucesso!")
           this.router.navigate(["funcionarios"]);
         });
       } else {
-        this.funcionarioService.updateFuncionario(funcionario).subscribe(value => {
+        this.funcionarioService.updateFuncionario(funcionario).subscribe(
+          () => {
           alert("Funcionario editado com sucesso!")
-          this.router.navigate(["funcionarios"])
+          this.router.navigate(["funcionarios"]) 
         });
       }
     }
   }
-
 }
 
 

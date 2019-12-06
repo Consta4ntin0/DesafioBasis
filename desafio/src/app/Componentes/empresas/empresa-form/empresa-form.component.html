@@ -11,8 +11,8 @@
                                 [(ngModel)]="empresa.nome" [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="col-md-6">
-                                <label for="cnpj">CNPJ:</label>
-                                <input id="cnpj" type="text" class="form-control" 
+                                <label for="cnpj">CNPJ(Apenas Numeros):</label>
+                                <input maxlength="14" id="cnpj" type="text" class="form-control" 
                                 [(ngModel)]="empresa.cnpj" [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="col-md-6">

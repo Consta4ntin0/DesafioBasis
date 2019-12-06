@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Funcionario } from '../Modelos/Funcionario';
 import { HttpClient } from '@angular/common/http';
+
 @Injectable()
 export class FuncionarioService {
 

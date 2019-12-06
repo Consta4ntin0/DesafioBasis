@@ -3,8 +3,8 @@
                 <div class="row">
                         <div [hidden]="oculto == false">
                                 <label>id:</label>
-                                <input type="number" class="form-control"
-                                        [(ngModel)]="funcionario.codFunc" [ngModelOptions]="{standalone: true}">
+                                <input type="number" class="form-control" [(ngModel)]="funcionario.codFunc"
+                                        [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="col-md-6">
                                 <label for="nome">Nome:</label>
@@ -17,15 +17,17 @@
                                         [ngModelOptions]="{standalone: true}" class="form-control">
                         </div>
                         <div class="col-md-6">
-                                <label for="cpf">CPF:</label>
-                                <input  id="cpf" maxlength="15" type="text" class="form-control"
+                                <label for="cpf">CPF(Apenas Numeros):</label>
+                                <input id="cpf" maxlength="11" type="text" class="form-control"
                                         [(ngModel)]="funcionario.cpfFunc" [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="col-md-6">
                                 <label for="empresas">Empresa</label>
-                                <select [(ngModel)]="funcionario.codEmpresa" [ngModelOptions]="{standalone: true}"  class="form-control" id="empresas" >
+                                <select [(ngModel)]="funcionario.codEmpresa" [ngModelOptions]="{standalone: true}"
+                                        class="form-control" id="empresas">
                                         <option selected disabled>Escolha sua empresa</option>
-                                        <option id="empresas"  *ngFor="let empresa of empresas" value="{{empresa.cod}}">{{empresa.nome}}
+                                        <option id="empresas" *ngFor="let empresa of empresas" value="{{empresa.cod}}">
+                                                {{empresa.nome}}
                                         </option>
                                 </select>
                         </div>
