@@ -2,23 +2,23 @@
         <form>
                 <div class="row">
                         <div [hidden]="oculto == false">
-                                <input id="id" type="text" class="form-control" 
-                                [(ngModel)]="empresa.cod" [ngModelOptions]="{standalone: true}"> 
+                                <input id="id" type="text" class="form-control" [(ngModel)]="empresa.cod"
+                                        [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="col-md-6">
                                 <label for="nome">Nome:</label>
-                                <input id="nome" type="text" class="form-control" 
-                                [(ngModel)]="empresa.nome" [ngModelOptions]="{standalone: true}">
+                                <input id="nome" type="text" class="form-control" [(ngModel)]="empresa.nome"
+                                        [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="col-md-6">
                                 <label for="cnpj">CNPJ(Apenas Numeros):</label>
-                                <input maxlength="14" id="cnpj" type="text" class="form-control" 
-                                [(ngModel)]="empresa.cnpj" [ngModelOptions]="{standalone: true}">
+                                <input maxlength="14" id="cnpj" type="text" class="form-control"
+                                        [(ngModel)]="empresa.cnpj" [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="col-md-6">
                                 <label for="endereco">Endereço:</label>
-                                <input id="endereco" type="text" class="form-control" 
-                                [(ngModel)]="empresa.endereco" [ngModelOptions]="{standalone: true}">
+                                <input id="endereco" type="text" class="form-control" [(ngModel)]="empresa.endereco"
+                                        [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="col align-self-end" style="margin-top: 20px;">
                                 <button type="button" class="btn btn-secondary"

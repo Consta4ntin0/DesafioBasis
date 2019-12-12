@@ -8,7 +8,6 @@ const empresaRoutes: Routes = [
         { path:"novo", component: EmpresaFormComponent },
         {path:'editar/:cod', component: EmpresaFormComponent},
     ]},
-    
 ];
 
 

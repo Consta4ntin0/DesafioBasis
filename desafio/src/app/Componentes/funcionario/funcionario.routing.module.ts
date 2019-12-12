@@ -6,7 +6,7 @@ import { FuncionarioFormComponent } from './funcionario-form/funcionario-form.co
 const funcionarioRoutes: Routes = [
     {path:'funcionario', children:[
         { path:":novo", component: FuncionarioFormComponent }  ,
-        {path:':editar/:codFunc', component: FuncionarioFormComponent},
+        {path:':editar/:cod', component: FuncionarioFormComponent},
     ]},
 ];
 

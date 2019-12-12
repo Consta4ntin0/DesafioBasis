@@ -20,7 +20,8 @@ export class EmpresasComponent implements OnInit {
   carregaDados(){
     this.service.getEmpresas().subscribe( valor => {
       this.empresas = valor;
-      }
+      console.log(this.empresas);  
+    }
     )
   }
 

@@ -1,35 +1,36 @@
 package com.Desafio.web;
 
 import com.Desafio.modelo.Funcionario;
-import com.Desafio.servico.DTO.FuncionarioDTO;
-import com.Desafio.servico.DTO.FuncionarioEditDTO;
+import com.Desafio.servico.DTO.FuncionarioCreateDto;
+import com.Desafio.servico.DTO.FuncionarioListDTO;
 import com.Desafio.servico.impl.FuncionarioServico;
-import com.Desafio.servico.mapper.EditarFuncionarioMapper;
-import com.Desafio.servico.mapper.ListagemFuncionarioMapper;
+import org.jetbrains.annotations.Contract;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
 import java.util.List;
-import java.util.Optional;
+
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 @Controller
 public class FuncionarioRest {
-    private ListagemFuncionarioMapper mapper;
+
+    @Autowired
     private final FuncionarioServico funcionarioServico;
 
+    @Contract(pure = true)
     FuncionarioRest(FuncionarioServico funcionarioServico){
         this.funcionarioServico = funcionarioServico;
     }
 
     @GetMapping(path = "/funcionarios")
-    public ResponseEntity<List<FuncionarioDTO>> buscarTodosFuncionarios() {
+    public ResponseEntity<List<FuncionarioListDTO>> buscarTodosFuncionarios() {
         try {
-        List<FuncionarioDTO> funcionariosCadastrados = funcionarioServico.listarFuncionarios();
+        List<FuncionarioListDTO> funcionariosCadastrados = funcionarioServico.listarFuncionarios();
         return new ResponseEntity<>(funcionariosCadastrados, HttpStatus.OK);
         }catch (ResponseStatusException e){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -37,17 +38,17 @@ public class FuncionarioRest {
     }
 
     @GetMapping(value = "/funcionario/{cod}")
-    public FuncionarioEditDTO listarId(@PathVariable("cod") int id) {
+    public FuncionarioCreateDto listarId(@PathVariable("cod") int id) {
+        System.out.println(funcionarioServico.buscaId(id).toString());
         return funcionarioServico.buscaId(id);
     }
 
     @PutMapping(value = "/funcionario/{cod}")
-    public ResponseEntity<Funcionario>  editar(@RequestBody FuncionarioEditDTO f, @PathVariable("cod") int cod){
-        try {
-            return new ResponseEntity<>(funcionarioServico.alterar(f), HttpStatus.OK);
-        }catch (ResponseStatusException e){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<Funcionario>  editar(@RequestBody FuncionarioCreateDto f,
+                                               @PathVariable("cod") int cod){
+        f.setCod(cod);
+        funcionarioServico.alterar(f);
+        return new ResponseEntity<>( HttpStatus.OK);
     }
 
     @DeleteMapping(value = "/funcionario/{cod}")
@@ -61,7 +62,9 @@ public class FuncionarioRest {
     }
 
     @PostMapping(value="/funcionario" )
-    public void adicionar(@RequestBody FuncionarioEditDTO funcionarioDto) {
-           funcionarioServico.cadastrar(funcionarioDto);
+    public ResponseEntity adicionar(@RequestBody FuncionarioCreateDto funcionarioCreateDto) {
+        funcionarioServico.cadastrar(funcionarioCreateDto);
+        return new ResponseEntity(HttpStatus.OK);
     }
+
 }

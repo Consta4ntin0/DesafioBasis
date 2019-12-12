@@ -1,33 +1,39 @@
 package com.Desafio.web;
 
 import com.Desafio.modelo.Empresa;
+import com.Desafio.servico.DTO.EmpresaListDTO;
+import com.Desafio.servico.impl.EmpresaEditSelectDTO;
 import com.Desafio.servico.impl.EmpresaServico;
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
 import java.util.Collection;
-import java.util.Optional;
+
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
 @RestController
 public class EmpresaRest {
+
     @Autowired
     EmpresaServico empresaServico;
 
+    @Autowired
+    EmpresaEditSelectDTO empresaEditSelectDTO;
+
     @GetMapping(value="/empresas")
-    public ResponseEntity<Collection<Empresa>> buscarTodasEmpresa() {
-        Collection<Empresa> empresaCadastradas = empresaServico.listarEmpresas();
+    public ResponseEntity<Collection<EmpresaListDTO>> buscarTodasEmpresa() {
+        Collection<EmpresaListDTO> empresaCadastradas = empresaServico.listarEmpresas();
         return new ResponseEntity<>(empresaCadastradas, HttpStatus.OK);
     }
 
     @GetMapping(value="/empresa/{cod}")
-    public Optional<Empresa> listarId(@PathVariable("cod") int id) {
-        return empresaServico.buscaId(id);
+    public EmpresaListDTO listarId(@PathVariable("cod") int id) {
+        return empresaEditSelectDTO.findById(id);
     }
 
     @PutMapping(value="/empresa/{cod}")
-    public Empresa editar(@RequestBody Empresa e, @PathVariable("cod") int cod) {
+    public Empresa editar(@NotNull @RequestBody Empresa e, @PathVariable("cod") int cod) {
         e.setCod(cod);
         return empresaServico.alterar(e);
     }
@@ -42,4 +48,5 @@ public class EmpresaRest {
     public void adicionar(@RequestBody Empresa funcionario) {
         empresaServico.cadastrar(funcionario);
     }
+
 }

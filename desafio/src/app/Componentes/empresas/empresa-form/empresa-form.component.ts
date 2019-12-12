@@ -9,33 +9,34 @@ import { Empresa } from './../../../Modelos/Empresa';
   templateUrl: './empresa-form.component.html',
   styleUrls: ['./empresa-form.component.css']
 })
+
 export class EmpresaFormComponent implements OnInit {
-  empresa:Empresa = new Empresa;
+  empresa: Empresa = new Empresa;
   oculto = false;
-  constructor(private empresaService:EmpresaService, 
-    private router:Router,
-    private route:ActivatedRoute) { }
+  constructor(private empresaService: EmpresaService,
+    private router: Router,
+    private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.route.params.subscribe(valor => {
-      if(valor['cod']){
+      if (valor['cod']) {
         this.carregaDados(Number(valor['cod']));
       }
     });
   }
 
-  carregaDados(cod:number) {
+  carregaDados(cod: number) {
     this.empresaService.getEmpresaId(cod).subscribe(valor => {
       this.empresa = valor;
     }
     )
   }
 
-  guardar(empresa: Empresa) { 
+  guardar(empresa: Empresa) {
     if (!empresa.cod) {
       this.empresaService.createEmpresa(empresa).subscribe(() => {
         alert("Empresa adicionada com sucesso!")
-        
+
         this.router.navigate(["empresas"]);
       });
     } else {
@@ -43,18 +44,18 @@ export class EmpresaFormComponent implements OnInit {
         alert("Empresa editada com sucesso!")
         this.router.navigate(["empresas"])
       });
-      }
+    }
   }
 
-    enviar(empresa:Empresa) {
-      if (!empresa.nome && !empresa.cnpj && !empresa.endereco) {
-        alert("preencha os campos corretamente");       
-      }else if(empresa.cnpj.length < 14){
-        alert("cnpj deve conter 14 digitos");  
-      } else {     
-          this.guardar(empresa);
-      }
+  enviar(empresa: Empresa) {
+    if (!empresa.nome && !empresa.cnpj && !empresa.endereco) {
+      alert("preencha os campos corretamente");
+    } else if (empresa.cnpj.length < 14) {
+      alert("cnpj deve conter 14 digitos");
+    } else {
+      this.guardar(empresa);
     }
+  }
 
 
 }

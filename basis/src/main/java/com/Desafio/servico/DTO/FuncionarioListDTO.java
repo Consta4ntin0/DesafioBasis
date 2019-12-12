@@ -1,5 +1,4 @@
 package com.Desafio.servico.DTO;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -9,17 +8,26 @@ import java.sql.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-public class FuncionarioEditDTO {
+public class FuncionarioListDTO {
 
     private int cod;
 
     private String nome;
 
     private Date dataNascimento;
-
     @CPF
     private String cpf;
 
-    private int codEmpresa;
+    private String nomeEmpresa;
+
+    private String pais;
+
+    private String uf;
+
+    private String cidade;
+
+    private String bairro;
+
+    private String rua;
 
 }

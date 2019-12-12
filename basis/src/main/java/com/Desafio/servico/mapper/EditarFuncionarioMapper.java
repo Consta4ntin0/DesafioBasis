@@ -1,38 +1,34 @@
 package com.Desafio.servico.mapper;
 
 import com.Desafio.modelo.Funcionario;
-import com.Desafio.servico.DTO.FuncionarioEditDTO;
+import com.Desafio.servico.DTO.FuncionarioCreateDto;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 
 @Mapper(componentModel = "spring", uses = {})
-public interface EditarFuncionarioMapper extends EntityMapper<FuncionarioEditDTO,Funcionario> {
+public interface EditarFuncionarioMapper extends EntityMapper<FuncionarioCreateDto,Funcionario> {
+
     @Override
-    @Mapping(source = "codFunc", target = "cod")
-    @Mapping(source = "nomeFunc", target = "nome")
-    @Mapping(source = "dataNascimentoFunc", target = "dataNascimento")
-    @Mapping(source = "cpfFunc", target = "cpf")
     @Mapping(source = "codEmpresa", target = "empresa.cod")
-    Funcionario toEntity(FuncionarioEditDTO funcionarioDto);
+    @Mapping(source = "codEndereco", target = "endereco.cod")
+    @Mapping(source = "pais", target = "endereco.pais")
+    @Mapping(source = "uf", target = "endereco.uf")
+    @Mapping(source = "cidade", target = "endereco.cidade")
+    @Mapping(source = "bairro", target = "endereco.bairro")
+    @Mapping(source = "rua", target = "endereco.rua")
+    @Mapping(source = "numero", target = "endereco.numero")
+    Funcionario toEntity(FuncionarioCreateDto funcionarioDto);
 
     @Override
-    @Mapping(source = "cod", target = "codFunc")
-    @Mapping(source = "nome", target = "nomeFunc")
-    @Mapping(source = "dataNascimento", target = "dataNascimentoFunc")
-    @Mapping(source = "cpf", target = "cpfFunc")
     @Mapping(source = "empresa.cod", target = "codEmpresa")
-    FuncionarioEditDTO toDto(Funcionario funcionario);
-
-
-
-   /* @Override
-    @Mapping(source = "cod", target = "codFunc")
-    @Mapping(source = "nome", target = "nomeFunc")
-    @Mapping(source = "dataNascimento", target = "dataNascimentoFunc")
-    @Mapping(source = "cpf", target = "cpfFunc")
-    @Mapping(source = "empresa.nome", target = "nomeEmpresa")
-    List<FuncionarioDTO> toDto(List<Funcionario> funcionarioList);*/
-
+    @Mapping(source = "endereco.cod", target = "codEndereco")
+    @Mapping(source = "endereco.pais", target = "pais")
+    @Mapping(source = "endereco.uf", target = "uf")
+    @Mapping(source = "endereco.cidade", target = "cidade")
+    @Mapping(source = "endereco.bairro", target = "bairro")
+    @Mapping(source = "endereco.rua", target = "rua")
+    @Mapping(source = "endereco.numero", target = "numero")
+    FuncionarioCreateDto toDto(Funcionario funcionario);
 
 }

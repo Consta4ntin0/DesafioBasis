@@ -1,13 +1,15 @@
-export class Funcionario {
+export class FuncionarioEndereco{
     cod:number;
     nome:string;
     dataNascimento: Date;
     cpf: string;
-    nomeEmpresa:string;
+    codEmpresa:number;
+    codEndereco:number;
     pais:string;
     uf: string;
     cidade: string;
     bairro:string;
     rua:string;
-
+    numero:number;
+   
 }

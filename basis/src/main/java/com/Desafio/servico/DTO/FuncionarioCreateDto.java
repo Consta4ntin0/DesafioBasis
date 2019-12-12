@@ -9,7 +9,7 @@ import java.sql.Date;
 @Getter
 @Setter
 @NoArgsConstructor
-public class FuncionarioEditDTO {
+public class FuncionarioCreateDto {
 
     private int cod;
 
@@ -21,5 +21,19 @@ public class FuncionarioEditDTO {
     private String cpf;
 
     private int codEmpresa;
+
+    private int codEndereco;
+
+    private String pais;
+
+    private String uf;
+
+    private String cidade;
+
+    private String bairro;
+
+    private String rua;
+
+    private int numero;
 
 }

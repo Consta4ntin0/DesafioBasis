@@ -3,23 +3,23 @@
                 <div class="row">
                         <div [hidden]="oculto == false">
                                 <label>id:</label>
-                                <input type="number" class="form-control" [(ngModel)]="funcionario.codFunc"
+                                <input type="number" class="form-control" [(ngModel)]="funcionario.cod"
                                         [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="col-md-6">
                                 <label for="nome">Nome:</label>
-                                <input type="text" class="form-control" [(ngModel)]="funcionario.nomeFunc"
+                                <input type="text" class="form-control" [(ngModel)]="funcionario.nome"
                                         [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="col-md-6">
                                 <label for="data">Data de Nascimento:</label>
-                                <input id="data" type="date" [(ngModel)]="funcionario.dataNascimentoFunc"
+                                <input id="data" type="date" [(ngModel)]="funcionario.dataNascimento"
                                         [ngModelOptions]="{standalone: true}" class="form-control">
                         </div>
                         <div class="col-md-6">
                                 <label for="cpf">CPF(Apenas Numeros):</label>
                                 <input id="cpf" maxlength="11" type="text" class="form-control"
-                                        [(ngModel)]="funcionario.cpfFunc" [ngModelOptions]="{standalone: true}">
+                                        [(ngModel)]="funcionario.cpf" [ngModelOptions]="{standalone: true}">
                         </div>
                         <div class="col-md-6">
                                 <label for="empresas">Empresa</label>
@@ -31,7 +31,44 @@
                                         </option>
                                 </select>
                         </div>
-
+                        <div class="col-12">
+                                        <hr>
+                        </div>
+                        <div [hidden]="oculto == false">
+                                <label>id:</label>
+                                <input type="number" class="form-control" [(ngModel)]="funcionario.codEndereco"
+                                        [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="col-md-6">
+                                <label for="pais">Pais:</label>
+                                <input type="text" class="form-control"
+                                [(ngModel)]="funcionario.pais" [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="col-md-6">
+                                <label for="UF">UF:</label>
+                                <input id="UF" type="text"  class="form-control"
+                                [(ngModel)]="funcionario.uf" [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="col-md-6">
+                                <label for="cidade">Cidade:</label>
+                                <input id="cidade" type="text" class="form-control"
+                                [(ngModel)]="funcionario.cidade" [ngModelOptions]="{standalone: true}"   >
+                        </div>
+                        <div class="col-md-6">
+                                <label for="bairro">Bairro:</label>
+                                <input id="bairro" type="text" class="form-control"
+                                [(ngModel)]="funcionario.bairro" [ngModelOptions]="{standalone: true}" >
+                        </div>
+                        <div class="col-md-6">
+                                <label for="rua">Rua:</label>
+                                <input id="rua" type="text" class="form-control"
+                                [(ngModel)]="funcionario.rua" [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div class="col-md-6">
+                                <label for="numero">Numero:</label>
+                                <input id="numero" type="number" class="form-control"
+                                [(ngModel)]="funcionario.numero" [ngModelOptions]="{standalone: true}">
+                        </div>
                         <div class="col align-self-end" style="margin-top: 20px;">
                                 <button type="button" class="btn btn-secondary"
                                         (click)="enviar(funcionario)">Enviar</button>

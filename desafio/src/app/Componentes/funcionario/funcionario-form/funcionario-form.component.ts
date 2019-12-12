@@ -1,3 +1,4 @@
+import { FuncionarioEndereco } from '../../../Modelos/FuncionarioEndereco';
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
@@ -13,6 +14,7 @@ import { EmpresaService } from 'src/app/Servicos/empresa.service';
 })
 export class FuncionarioFormComponent implements OnInit {
   funcionario: any = {};
+  funcionarioEnd: FuncionarioEndereco = new FuncionarioEndereco;
   empresas: Empresa[] = [];
   oculto = false;
 
@@ -24,8 +26,10 @@ export class FuncionarioFormComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(valor => {
-      if (valor['codFunc']) {
-        this.carregaDadosFunc(Number(valor['codFunc']));
+      console.log("asdasdasd"+valor['cod']);
+      
+      if (valor['cod']) {
+        this.carregaDadosFunc(Number(valor['cod']));
       }
     })
     this.carregaDados();
@@ -34,6 +38,7 @@ export class FuncionarioFormComponent implements OnInit {
   carregaDados() {
     this.service.getEmpresasDto().subscribe(valor => {
       this.empresas = valor;
+     // console.log(valor);
     }
     )
   }
@@ -41,19 +46,30 @@ export class FuncionarioFormComponent implements OnInit {
   carregaDadosFunc(id: number) {
     this.funcionarioService.getFuncionarioId(id).subscribe(valor => {
       this.funcionario = valor;
+      console.log(valor);
+      
     }
     )
   }
 
-  enviar(funcionario: Funcionario) {
-    if (!funcionario.nomeFunc && !funcionario.cpfFunc && !funcionario.dataNascimentoFunc) {
+  enviar(funcionario: FuncionarioEndereco) {
+    if (!funcionario.nome && !funcionario.cpf && !funcionario.dataNascimento
+      && !funcionario.cidade && !funcionario.bairro && !funcionario.numero && !funcionario.pais
+      && !funcionario.rua && !funcionario.uf) {
       alert("preencha os campos")
     } else {
-      if (!funcionario.codFunc) {
-        this.funcionarioService.createFuncionario(funcionario).subscribe(() => {
+      if (!funcionario.cod) {
+        console.log(funcionario);
+        //
+        this.funcionarioService.createFuncionario(funcionario)
+        .subscribe(() => {
+          console.log("log subscribe");
+          
           alert("Funcionario adicionado com sucesso!")
           this.router.navigate(["funcionarios"]);
         });
+        console.log("ultimo log");
+        
       } else {
         this.funcionarioService.updateFuncionario(funcionario).subscribe(
           () => {

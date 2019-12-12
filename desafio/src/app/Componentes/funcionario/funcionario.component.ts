@@ -1,3 +1,4 @@
+import { FuncionarioEndereco } from '../../Modelos/FuncionarioEndereco';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
@@ -13,6 +14,7 @@ import { FuncionarioFormComponent } from './funcionario-form/funcionario-form.co
   templateUrl: './funcionario.component.html',
   styleUrls: ['./funcionario.component.css']
 })
+
 export class FuncionarioComponent implements OnInit {
   @ViewChild('funcionarioForm',null) funcionarioForm:FuncionarioFormComponent;
   funcionarios: Funcionario[];
@@ -21,7 +23,7 @@ export class FuncionarioComponent implements OnInit {
 
   constructor(private funcionarioService:FuncionarioService, private router: Router,private service:EmpresaService) { }
 
-  ngOnInit() {
+  ngOnInit() { 
     this.carregaDados();
   }
 
@@ -38,13 +40,13 @@ export class FuncionarioComponent implements OnInit {
   deletar(func:any){
     this.funcionarioService.deleteFuncionario(func).subscribe( () => {
       this.funcionarios = this.funcionarios.filter(funcionario => {
-        return funcionario.codFunc !== func.codFunc;
+        return funcionario.cod !== func.cod;
       });
     });
   }
 
   editar(func:any){
-    this.router.navigate(['funcionario/editar/',func.codFunc],);
+    this.router.navigate(['funcionario/editar/',func.cod],);
   }
   
   carregaEmp(){
