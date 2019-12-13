@@ -1,4 +1,3 @@
-import { PaginaInexistenteComponent } from './componentes/pagina-inexistente/pagina-inexistente.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { FuncionarioComponent } from './Componentes/funcionario/funcionario.component';
