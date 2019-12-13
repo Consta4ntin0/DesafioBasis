@@ -4,6 +4,7 @@ import com.Desafio.modelo.Funcionario;
 import com.Desafio.servico.DTO.FuncionarioCreateDto;
 import com.Desafio.servico.DTO.FuncionarioListDTO;
 import com.Desafio.servico.impl.FuncionarioServico;
+import com.Desafio.web.error.CustomErrorType;
 import org.jetbrains.annotations.Contract;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,6 +13,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.server.ResponseStatusException;
+
+import javax.validation.ValidationException;
 import java.util.List;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
@@ -46,9 +49,13 @@ public class FuncionarioRest {
     @PutMapping(value = "/funcionario/{cod}")
     public ResponseEntity<Funcionario>  editar(@RequestBody FuncionarioCreateDto f,
                                                @PathVariable("cod") int cod){
+        try{
         f.setCod(cod);
         funcionarioServico.alterar(f);
         return new ResponseEntity<>( HttpStatus.OK);
+    }catch (ValidationException e){
+        return new ResponseEntity(new CustomErrorType("CPF Invalido"),HttpStatus.BAD_REQUEST);
+    }
     }
 
     @DeleteMapping(value = "/funcionario/{cod}")
@@ -63,8 +70,12 @@ public class FuncionarioRest {
 
     @PostMapping(value="/funcionario" )
     public ResponseEntity adicionar(@RequestBody FuncionarioCreateDto funcionarioCreateDto) {
-        funcionarioServico.cadastrar(funcionarioCreateDto);
-        return new ResponseEntity(HttpStatus.OK);
+        try {
+            funcionarioServico.cadastrar(funcionarioCreateDto);
+            return new ResponseEntity(HttpStatus.OK);
+        }catch (ValidationException e){
+            return new ResponseEntity(new CustomErrorType("CPF Invalido"),HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

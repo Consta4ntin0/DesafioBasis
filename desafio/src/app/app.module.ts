@@ -9,12 +9,14 @@ import { AppComponent } from './app.component';
 import { NavbarComponent } from './Componentes/navbar/navbar.component';
 import { HomeComponent } from './Componentes/home/home.component';
 import { FuncionarioModule } from './Componentes/funcionario/funcionario.module';
+import { PaginaInexistenteComponent } from './componentes/pagina-inexistente/pagina-inexistente.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     HomeComponent,
+    PaginaInexistenteComponent,
   
   ],
   imports: [

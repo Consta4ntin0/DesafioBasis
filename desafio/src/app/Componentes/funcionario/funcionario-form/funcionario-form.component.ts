@@ -53,9 +53,9 @@ export class FuncionarioFormComponent implements OnInit {
   }
 
   enviar(funcionario: FuncionarioEndereco) {
-    if (!funcionario.nome && !funcionario.cpf && !funcionario.dataNascimento
-      && !funcionario.cidade && !funcionario.bairro && !funcionario.numero && !funcionario.pais
-      && !funcionario.rua && !funcionario.uf) {
+    if (!funcionario.nome || !funcionario.cpf || !funcionario.dataNascimento
+      || !funcionario.cidade || !funcionario.bairro || !funcionario.numero || !funcionario.pais
+      || !funcionario.rua || !funcionario.uf) {
       alert("preencha os campos")
     } else {
       if (!funcionario.cod) {

@@ -1,3 +1,4 @@
+import { PaginaInexistenteComponent } from './../../componentes/pagina-inexistente/pagina-inexistente.component';
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 
@@ -6,7 +7,7 @@ import { FuncionarioFormComponent } from './funcionario-form/funcionario-form.co
 const funcionarioRoutes: Routes = [
     {path:'funcionario', children:[
         { path:":novo", component: FuncionarioFormComponent }  ,
-        {path:':editar/:cod', component: FuncionarioFormComponent},
+        {path:':editar/:cod', component: FuncionarioFormComponent}, 
     ]},
 ];
 

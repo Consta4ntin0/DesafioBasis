@@ -1,7 +1,7 @@
 import { FuncionarioEndereco } from '../Modelos/FuncionarioEndereco';
 import { Injectable } from '@angular/core';
 import { HttpClient} from '@angular/common/http';
-import { retry, catchError } from 'rxjs/operators';
+import { retry, catchError, filter } from 'rxjs/operators';
 import { Funcionario } from '../Modelos/Funcionario';
 import { throwError } from 'rxjs';
 
@@ -31,7 +31,12 @@ export class FuncionarioService {
   }
 
   updateFuncionario(funcionario: FuncionarioEndereco) {
-    return this.http.put<Funcionario>(this.Url + "/" + funcionario.cod, funcionario);
+    return this.http.put<Funcionario>(this.Url + "/" + funcionario.cod, funcionario)
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
+    
   }
 
   deleteFuncionario(funcionario: Funcionario) {
@@ -44,7 +49,10 @@ export class FuncionarioService {
     if (error.error instanceof ErrorEvent) {
       errorMessage = `Error: ${error.error.message}`;
     } else {
-      errorMessage = `Error Code: ${error.status}\nMessage: ${error.message}`;
+      console.log(error);
+      
+      errorMessage = `Error: ${error.status}\nMessage: ${error.error.errorMessage}`;
+
     }
     window.alert(errorMessage);
     return throwError(errorMessage);

@@ -1,3 +1,5 @@
+import { retry, catchError } from 'rxjs/operators';
+import { throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
@@ -19,7 +21,11 @@ export class EmpresaService {
     return this.http.get<Empresa[]>(this.Url+"sDto");
   }
   createEmpresa(empresa: Empresa){
-    return this.http.post<Empresa>(this.Url,empresa);
+    return this.http.post<Empresa>(this.Url,empresa)
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
   }
 
   getEmpresaId(cod: number){
@@ -27,10 +33,27 @@ export class EmpresaService {
   }
 
   updateEmpresa(empresa: Empresa){
-    return this.http.put<Empresa>(this.Url+"/"+empresa.cod, empresa);
+    return this.http.put<Empresa>(this.Url+"/"+empresa.cod, empresa)
+    .pipe(
+      retry(1),
+      catchError(this.handleError)
+    );
   }
 
   deleteEmpresa(empresa: Empresa){
     return this.http.delete<Empresa>(this.Url+"/"+empresa.cod);
+  }
+  handleError(error) {
+    console.log(error);
+    
+    let errorMessage = '';
+    if (error.error instanceof ErrorEvent) {
+      errorMessage = `Error: ${error.error.message}`;
+    } else {
+      errorMessage = `Error: ${error.status}\nMessage: ${error.error.errorMessage}`;
+
+    }
+    window.alert(errorMessage);
+    return throwError(errorMessage);
   }
 }

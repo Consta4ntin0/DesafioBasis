@@ -4,11 +4,14 @@ import com.Desafio.modelo.Empresa;
 import com.Desafio.servico.DTO.EmpresaListDTO;
 import com.Desafio.servico.impl.EmpresaEditSelectDTO;
 import com.Desafio.servico.impl.EmpresaServico;
+import com.Desafio.web.error.CustomErrorType;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import javax.validation.ValidationException;
 import java.util.Collection;
 
 @CrossOrigin(origins = "http://localhost:4200", maxAge = 3600)
@@ -33,9 +36,14 @@ public class EmpresaRest {
     }
 
     @PutMapping(value="/empresa/{cod}")
-    public Empresa editar(@NotNull @RequestBody Empresa e, @PathVariable("cod") int cod) {
-        e.setCod(cod);
-        return empresaServico.alterar(e);
+    public ResponseEntity editar(@NotNull @RequestBody Empresa emp, @PathVariable("cod") int cod) {
+        try{
+        emp.setCod(cod);
+        empresaServico.alterar(emp);
+        return new ResponseEntity(HttpStatus.OK);
+    } catch (ValidationException e) {
+        return new ResponseEntity(new CustomErrorType("CNPJ Invalido"), HttpStatus.BAD_REQUEST);
+    }
     }
 
     @DeleteMapping(value="/empresa/{cod}")
@@ -45,8 +53,14 @@ public class EmpresaRest {
     }
 
     @PostMapping(value="/empresa")
-    public void adicionar(@RequestBody Empresa funcionario) {
-        empresaServico.cadastrar(funcionario);
+    public ResponseEntity adicionar(@RequestBody Empresa funcionario) {
+        try {
+            empresaServico.cadastrar(funcionario);
+            return new ResponseEntity(HttpStatus.OK);
+        } catch (
+                ValidationException e) {
+            return new ResponseEntity(new CustomErrorType("CNPJ Invalido"), HttpStatus.BAD_REQUEST);
+        }
     }
 
 }

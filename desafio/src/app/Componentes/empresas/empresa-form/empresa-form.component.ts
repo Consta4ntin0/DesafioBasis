@@ -48,7 +48,7 @@ export class EmpresaFormComponent implements OnInit {
   }
 
   enviar(empresa: Empresa) {
-    if (!empresa.nome && !empresa.cnpj && !empresa.endereco) {
+    if (!empresa.nome || !empresa.cnpj || !empresa.endereco) {
       alert("preencha os campos corretamente");
     } else if (empresa.cnpj.length < 14) {
       alert("cnpj deve conter 14 digitos");
